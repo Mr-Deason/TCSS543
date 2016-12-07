@@ -13,6 +13,15 @@ import sun.nio.cs.ext.ISCII91;
 
 public class PreflowPush {
 
+	private static String source;
+	private static String sink;
+	
+	public static int MaxFlow(SimpleGraph sg, String source, String sink) {
+		PreflowPush.source = source;
+		PreflowPush.sink = sink;
+		return MaxFlow(sg);
+	}
+	
 	static public int MaxFlow(SimpleGraph sg) {
 		int maxflow = 0;
 

@@ -6,6 +6,15 @@ import javax.swing.JSpinner.DefaultEditor;
 
 public class ScalingMaxFlow {
 	
+	private static String source;
+	private static String sink;
+	
+	public static int MaxFlow(SimpleGraph sg, String source, String sink) {
+		ScalingMaxFlow.source = source;
+		ScalingMaxFlow.sink = sink;
+		return MaxFlow(sg);
+	}
+	
 	public static int MaxFlow(SimpleGraph sg) {
 
 		int maxflow = 0;
@@ -27,7 +36,7 @@ public class ScalingMaxFlow {
 		Vertex s = null;
 		for (Iterator ite = sg.vertices(); ite.hasNext();) {
 			Vertex v = (Vertex) ite.next();
-			if (v.getName().equals("s")) {
+			if (v.getName().equals(source)) {
 				s = v;
 				break;
 			}
@@ -55,7 +64,7 @@ public class ScalingMaxFlow {
 					edges.add(e);
 					last.add(i);
 					visited.put(u.getName(), u);
-					if (u.getName().equals("t")) {
+					if (u.getName().equals(sink)) {
 						flow = Integer.min((Integer) flist.get(i), (Integer) e.getData());
 						find = true;
 						break;

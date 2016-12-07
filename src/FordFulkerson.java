@@ -216,8 +216,10 @@ public class FordFulkerson {
         }
     }
     
-    
     public static int MaxFlow(SimpleGraph sg) {
+    	return MaxFlow(sg, "s", "t");
+    }
+    public static int MaxFlow(SimpleGraph sg, String s, String t) {
     	int maxflow = 0;
     	LinkedList<Vertex> V = sg.vertexList;
     	Hashtable hash = new Hashtable<>();
@@ -225,8 +227,8 @@ public class FordFulkerson {
     		hash.put(v.getName(), v);
     	}
     	
-    	source = "s";
-    	sink = "t";
+    	source = s;
+    	sink = t;
     	maxflow = computeMaxFlow(hash);
     	return maxflow;
     }

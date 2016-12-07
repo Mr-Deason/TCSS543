@@ -94,7 +94,7 @@ public class GraphInput {
 			line = InputLib.getLine(inbuf);
 		}
 
-		InputLib.fclose(inbuf);
+		//InputLib.fclose(inbuf);
 		System.out.println("Successfully loaded " + linenum + " lines. ");
 		return table;
 	}
