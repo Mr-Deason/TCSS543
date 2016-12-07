@@ -65,87 +65,28 @@ public class GraphInput {
 			sTok = new StringTokenizer(line);
 			n = sTok.countTokens();
 			if (n == 3) {
-				Double edgedata;
-				Vertex v1, v2;
-				String v1name, v2name;
-
-				v1name = sTok.nextToken();
-				v2name = sTok.nextToken();
-				edgedata = new Double(Double.parseDouble(sTok.nextToken()));
-				v1 = (Vertex) table.get(v1name);
-				if (v1 == null) {
-					// System.out.println("New vertex " + v1name);
-					v1 = sg.insertVertex(null, v1name);
-					table.put(v1name, v1);
-				}
-				v2 = (Vertex) table.get(v2name);
-				if (v2 == null) {
-					// System.out.println("New vertex " + v2name);
-					v2 = sg.insertVertex(null, v2name);
-					table.put(v2name, v2);
-				}
-				// System.out.println("Inserting edge (" + v1name + "," + v2name
-				// + ")" + edgedata);
-				sg.insertEdge(v1, v2, edgedata, null);
-			} else {
-				System.err.println("Error:invalid number of tokens found on line " + linenum + "!");
-				return null;
-			}
-			line = InputLib.getLine(inbuf);
-		}
-
-		InputLib.fclose(inbuf);
-		System.out.println("Successfully loaded " + linenum + " lines. ");
-		return table;
-	}
-
-	public static Hashtable LoadSimpleAndResidualGraph(SimpleGraph newgraph, SimpleGraph resgraph,
-			String pathandfilename) {
-		BufferedReader inbuf = InputLib.fopen(pathandfilename);
-		System.out.println("Opened " + pathandfilename + " for input.");
-		String line = InputLib.getLine(inbuf); // get first line
-		StringTokenizer sTok;
-		int n, linenum = 0;
-		Hashtable table = new Hashtable();
-		Hashtable ttable = new Hashtable();
-		SimpleGraph sg = newgraph;
-		SimpleGraph resg = resgraph;
-
-		while (line != null) {
-			linenum++;
-			sTok = new StringTokenizer(line);
-			n = sTok.countTokens();
-			if (n == 3) {
 				Integer edgedata;
 				Vertex v1, v2;
-				Vertex vv1, vv2;
 				String v1name, v2name;
 
 				v1name = sTok.nextToken();
 				v2name = sTok.nextToken();
 				edgedata = new Integer(Integer.parseInt(sTok.nextToken()));
 				v1 = (Vertex) table.get(v1name);
-				vv1 = (Vertex) ttable.get(v1name);
 				if (v1 == null) {
 					// System.out.println("New vertex " + v1name);
 					v1 = sg.insertVertex(null, v1name);
-					vv1 = resg.insertVertex(null, v1name);
 					table.put(v1name, v1);
-					ttable.put(v1name, vv1);
 				}
 				v2 = (Vertex) table.get(v2name);
-				vv2 = (Vertex) ttable.get(v2name);
 				if (v2 == null) {
 					// System.out.println("New vertex " + v2name);
 					v2 = sg.insertVertex(null, v2name);
-					vv2 = resg.insertVertex(null, v2name);
 					table.put(v2name, v2);
-					ttable.put(v2name, vv2);
 				}
 				// System.out.println("Inserting edge (" + v1name + "," + v2name
 				// + ")" + edgedata);
 				sg.insertEdge(v1, v2, edgedata, null);
-				resg.insertEdge(vv1, vv2, new Integer(edgedata), null);
 			} else {
 				System.err.println("Error:invalid number of tokens found on line " + linenum + "!");
 				return null;
@@ -157,6 +98,7 @@ public class GraphInput {
 		System.out.println("Successfully loaded " + linenum + " lines. ");
 		return table;
 	}
+
 
 	/**
 	 * Code to test the methods of this class.
@@ -165,11 +107,11 @@ public class GraphInput {
 		SimpleGraph G;
 		SimpleGraph resg = new SimpleGraph();
 		G = new SimpleGraph();
-		LoadSimpleAndResidualGraph(G, resg, args[0]);
+		LoadSimpleGraph(G, args[0]);
 		int ans = 0;
 		//ans = FordFulkerson.MaxFlow(resg);
 		//ans = ScalingMaxFlow.MaxFlow(resg);
-		ans = PreflowPush.MaxFlow(resg);
+		ans = PreflowPush.MaxFlow(G);
 		System.out.println(ans);
 	}
 }

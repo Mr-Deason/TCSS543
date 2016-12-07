@@ -1,85 +1,310 @@
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
+//import static testFFa.GraphInput.LoadSimpleGraph;
+//import testFFa.Vertex.*;
+/**
+ *
+ * @author Vishaal
+ */
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
-
-import javafx.scene.shape.QuadCurve;
-import sun.misc.Queue;
-
+import com.sun.media.jfxmedia.events.NewFrameEvent;
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 public class FordFulkerson {
-	
-	public static int MaxFlow(SimpleGraph sg) {
-		
-		int maxflow = 0;
-		int flow = 0;
-		int cnt = 0;
-		while ((flow = AugmentPath(sg)) > 0) {
-			maxflow += flow;
-		}
-		return maxflow;
-	}
-	
-	public static int AugmentPath(SimpleGraph sg) {
-		int flow = 0;
-		Vertex s = null;
-		for (Iterator ite = sg.vertices(); ite.hasNext();) {
-			Vertex v = (Vertex) ite.next();
-			if (v.getName().equals("s")) {
-				s = v;
-				break;
-			}
-		}
-		ArrayList list = new ArrayList();
-		ArrayList flist = new ArrayList();
-		ArrayList last = new ArrayList();
-		ArrayList edges = new ArrayList();
-		Hashtable visited = new Hashtable();
-		list.add(s);
-		flist.add(Integer.MAX_VALUE);
-		last.add(-1);
-		edges.add(new Object());
-		visited.put(s.getName(), s);
-		for (int i=0;i<list.size(); ++i) {
-			Vertex v = (Vertex) list.get(i);
-			boolean find = false;
-			for (Iterator ite = v.incidentEdgeList.iterator(); ite.hasNext();) {
-				Edge e = (Edge) ite.next();
-				Vertex u = e.getSecondEndpoint();
-				Vertex next = (Vertex) visited.get(u.getName());
-				if (next == null && (Integer) e.getData() > 0) {
-					System.out.println("find path from " +v.getName()+ " to "+ u.getName() + " : "+(Integer)e.getData());
-					list.add(u);
-					flist.add(Integer.min((Integer) flist.get(i), (Integer) e.getData()));
-					edges.add(e);
-					last.add(i);
-					visited.put(u.getName(), u);
-					if (u.getName().equals("t")) {
-						flow = Integer.min((Integer) flist.get(i), (Integer) e.getData());
-						find = true;
-						break;
-					}
-				}
-			}
-			System.out.println("queue: " + i);
-			if (find) {
-				break;
-			}
-			
-		}
-		
-		for (int i=list.size()-1;i!=0;) {
-			int j = (Integer) last.get(i);
-			Vertex u = (Vertex) list.get(i);
-			Vertex v = (Vertex) list.get(j);
-			Edge e = (Edge) edges.get(i);
-			sg.insertEdge(u, v, flow, null);
-			e.setData((Integer) e.getData() - flow);
-			i = j;
-		}
-		System.out.println("augment path flow " + flow);
-		return flow;
-	}
+
+ 
+    private static final ArrayList vertices = new ArrayList(); //contains all the vertices of the graph
+    private static String source; //the source node
+    private static String sink; //the sink node
+    
+    //The following function computes the max-flow of the given graph from all the possible augmented paths
+    public static int computeMaxFlow(Hashtable inputGraph)
+    {
+        int maxflow = 0;
+        String u,v;
+        Hashtable residualGraph = new Hashtable(); //residual graph
+        try
+        {
+            getVertices(inputGraph);
+            residualGraph = inputGraph;
+            Hashtable parent = new Hashtable(); //contains the parent node of each nodes
+            while(augumentPath(residualGraph,parent))
+            {
+                int temp = Integer.MAX_VALUE;
+                for(v=sink;!v.equalsIgnoreCase(source);v=(String)parent.get(v))
+                {
+                    u = (String)parent.get(v);
+                    int t1 = getResValue(u, v, residualGraph);
+                    temp = Math.min(t1, temp); //bottle neck of for the given augmented path
+                }
+                for(v=sink;!v.equalsIgnoreCase(source);v=(String)parent.get(v))
+                {
+                    u =(String)parent.get(v);
+                    setResidualValues(u,v,temp,residualGraph); //updates the residual graph
+                }
+                maxflow += temp;
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return maxflow;
+    }
+
+    //the following function finds the possible augmented paths from source to the sink using BFS
+    public static Boolean augumentPath(Hashtable inputGraph, Hashtable parent)
+    {
+        Hashtable visited = new Hashtable(); //contains the visited state of a node
+        try
+        {
+            for(int i=0;i<vertices.size();i++)
+            {
+                visited.put(vertices.get(i), false); //intially setting the visited state of all the node to false
+            }
+            LinkedList que = new LinkedList();
+            que.add(source);
+            visited.replace(source, true);
+            parent.put(source, -1);
+            while(!que.isEmpty())
+            {
+                String head = (String)que.poll(); //element at the top of the que
+                for(Enumeration en = inputGraph.keys();en.hasMoreElements();)
+                {
+                    String key = (String)en.nextElement();
+                    if((boolean)visited.get(key)==false && getResValue(head,key,inputGraph) > 0)
+                    {
+                        que.add(key);
+                        parent.put(key, head);
+                        visited.put(key,true); 
+                    }
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return ((boolean)visited.get(sink));
+    }
+    
+    //the following function updates the residual graph
+    public static void setResidualValues(String u, String v, int val, Hashtable inputGraph)
+    {
+        try
+        {
+            //forward edge value from the residual graph for the given edge
+            Vertex vertex = (Vertex)inputGraph.get(u);
+            LinkedList linkedList = vertex.incidentEdgeList;
+            Iterator it = (Iterator)linkedList.iterator();
+            while(it.hasNext())
+            {
+                Edge edge = (Edge)it.next();
+                Vertex secondVertex = (Vertex)edge.getSecondEndpoint();
+                String secondVertexName = (String)secondVertex.getName();
+                if(secondVertexName.equalsIgnoreCase(v))
+                {
+                    int tempVal = (int)edge.getData();
+                    tempVal -= val;
+                    edge.setData(tempVal);
+                }
+            }
+            
+            //reverse edge value from the residual graph for the given edge
+            vertex = (Vertex)inputGraph.get(v);
+            linkedList = vertex.incidentEdgeList;
+            it = (Iterator)linkedList.iterator();
+            while(it.hasNext())
+            {
+                Edge edge = (Edge)it.next();
+                Vertex secondVertex = (Vertex)edge.getSecondEndpoint();
+                String secondVertexName = (String)secondVertex.getName();
+                if(secondVertexName.equalsIgnoreCase(u))
+                {
+                    int tempVal = (int)edge.getData();
+                    tempVal += val;
+                    edge.setData(tempVal);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    //the following function retrieves the forward edge value of the give edge from the residual graph
+    public static int getResValue(String u, String v, Hashtable inputGraph)
+    {
+        int value = 0;
+        try
+        {
+            Vertex vertex = (Vertex)inputGraph.get(u);
+            LinkedList linkedList = vertex.incidentEdgeList;
+            Iterator it = (Iterator)linkedList.iterator();
+            while(it.hasNext())
+            {
+                Edge edge = (Edge)it.next();
+                Vertex secondVertex = (Vertex)edge.getSecondEndpoint();
+                String secondVertexName = (String)secondVertex.getName();
+                if(secondVertexName.equalsIgnoreCase(v))
+                {
+                    value = (Integer) edge.getData();
+                    break;
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            value = 0;
+        }
+        return value;
+    }
+
+    
+    //the following function retrieves all the vertices of the generated graph
+    public static void getVertices(Hashtable inputGraph)
+    {
+        try
+        {
+            for(Enumeration en=inputGraph.keys();en.hasMoreElements();)
+            {
+                vertices.add((String)en.nextElement());
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //the following function writes the max-flow, the time taken to execute the algorithm
+    //for the generated graph from the input file and the file name to a file(logFile.csv)
+    public static void logToFile(long time, String fileName,int maxFlow)
+    {
+        FileWriter fileWriter = null;
+        BufferedWriter  bufferedWriter = null;
+        PrintWriter printWriter = null;
+        String fName = "logFile.csv";
+        try
+        {
+            File file = new File(fName);
+            fileWriter = new FileWriter(file,true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            printWriter = new PrintWriter(bufferedWriter);
+            printWriter.println(fileName+","+time+","+maxFlow);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if(printWriter!=null)
+                    printWriter.close();
+                if(bufferedWriter!=null)
+                    bufferedWriter.close();
+                if(fileWriter!=null)
+                    fileWriter.close();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
+    public static int MaxFlow(SimpleGraph sg) {
+    	int maxflow = 0;
+    	LinkedList<Vertex> V = sg.vertexList;
+    	Hashtable hash = new Hashtable<>();
+    	for (Vertex v : V) {
+    		hash.put(v.getName(), v);
+    	}
+    	
+    	source = "s";
+    	sink = "t";
+    	maxflow = computeMaxFlow(hash);
+    	return maxflow;
+    }
+    //main function of the class
+    public static void main(String args[]) throws Exception
+    {
+        BufferedReader input = null;
+        try
+        {
+            if(args.length > 0)
+            {
+                input = new BufferedReader(new InputStreamReader(System.in));
+                SimpleGraph G;
+                G = new SimpleGraph();
+                Hashtable hash = GraphInput.LoadSimpleGraph(G, args[0]);
+                boolean check = false;
+                do
+                {
+                    System.out.println("Enter the SOURCE (case-sensitive)");
+                    source = input.readLine();
+                    if(hash.keySet().contains(source))
+                    {
+                        check = true;
+                    }
+                    else
+                    {
+                        System.out.println("Enter a Valid SOURCE");
+                    }
+                }while(check==false);
+                check = false;
+                do
+                {
+                    System.out.println("Enter the SINK (case-sensitive)");
+                    sink = input.readLine();
+                    if(hash.keySet().contains(sink) && !source.equals(sink))
+                    {
+                        check = true;
+                    }
+                    else if(source.equalsIgnoreCase(sink))
+                    {
+                        System.out.println("SOURCE and SINK cannot be the same");
+                        System.out.println("Enter a valid SINK");
+                    }
+                    else
+                    {
+                        System.out.println("Enter a valid SINK");
+                    }
+                }while(check==false);
+                //System.out.println("Vertices :: "+ hash.keySet());
+
+                long start = System.currentTimeMillis();
+                int maxFlow = computeMaxFlow(hash);
+                long end = System.currentTimeMillis() - start;
+                System.out.println("The Max Flow for the given graph is :: "+maxFlow);
+
+                String fileName = args[0];
+                logToFile(end,fileName,maxFlow);
+            }
+            else
+            {
+                System.out.println("Input a file!");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if(input!=null)
+                    input.close();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

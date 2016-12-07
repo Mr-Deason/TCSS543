@@ -1,0 +1,8 @@
+./data/Bipartite/g1.txt
+./data/Bipartite/g2.txt
+./data/FixedDegree/20v-3out-4min-355max.txt
+./data/FixedDegree/100v-5out-25min-200max.txt
+./data/Mesh/smallMesh.txt
+./data/Mesh/mediumMesh.txt
+./data/Random/n10-m10-cmin5-cmax10-f30.txt
+./data/Random/n100-m100-cmin10-cmax20-f949.txt
