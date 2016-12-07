@@ -1,0 +1,176 @@
+./data/Bipartite/g1.txt
+./data/Bipartite/g2.txt
+./data/FixedDegree/20v-3out-4min-355max.txt
+./data/FixedDegree/100v-5out-25min-200max.txt
+./data/Mesh/smallMesh.txt
+./data/Mesh/mediumMesh.txt
+./data/Random/n10-m10-cmin5-cmax10-f30.txt
+./data/Random/n100-m100-cmin10-cmax20-f949.txt
+Opened ./data/Bipartite/g1.txt for input.
+Successfully loaded 230 lines. 
+<The graph in ./data/Bipartite/g1.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 150    Time: 10 ms
+Max Flow: 150    Time: 8 ms
+Max Flow: 150    Time: 11 ms
+Max Flow: 150    Time: 3 ms
+Max Flow: 150    Time: 3 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 150    Time: 3 ms
+Max Flow: 150    Time: 1 ms
+Max Flow: 150    Time: 7 ms
+Max Flow: 150    Time: 0 ms
+Max Flow: 150    Time: 0 ms
+---Preflow Push Algorithm---
+Max Flow: 150    Time: 5 ms
+Max Flow: 150    Time: 2 ms
+Max Flow: 150    Time: 1 ms
+Max Flow: 150    Time: 1 ms
+Max Flow: 150    Time: 1 ms
+Opened ./data/Bipartite/g2.txt for input.
+Successfully loaded 640 lines. 
+<The graph in ./data/Bipartite/g2.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 898    Time: 24 ms
+Max Flow: 898    Time: 23 ms
+Max Flow: 898    Time: 24 ms
+Max Flow: 898    Time: 25 ms
+Max Flow: 898    Time: 24 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 898    Time: 2 ms
+Max Flow: 898    Time: 3 ms
+Max Flow: 898    Time: 2 ms
+Max Flow: 898    Time: 3 ms
+Max Flow: 898    Time: 2 ms
+---Preflow Push Algorithm---
+Max Flow: 898    Time: 136 ms
+Max Flow: 898    Time: 67 ms
+Max Flow: 898    Time: 41 ms
+Max Flow: 898    Time: 41 ms
+Max Flow: 898    Time: 43 ms
+Opened ./data/FixedDegree/20v-3out-4min-355max.txt for input.
+Successfully loaded 66 lines. 
+<The graph in ./data/FixedDegree/20v-3out-4min-355max.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 368    Time: 0 ms
+Max Flow: 368    Time: 1 ms
+Max Flow: 368    Time: 0 ms
+Max Flow: 368    Time: 1 ms
+Max Flow: 368    Time: 0 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 368    Time: 1 ms
+Max Flow: 368    Time: 0 ms
+Max Flow: 368    Time: 0 ms
+Max Flow: 368    Time: 0 ms
+Max Flow: 368    Time: 1 ms
+---Preflow Push Algorithm---
+Max Flow: 368    Time: 2 ms
+Max Flow: 368    Time: 2 ms
+Max Flow: 368    Time: 2 ms
+Max Flow: 368    Time: 2 ms
+Max Flow: 368    Time: 3 ms
+Opened ./data/FixedDegree/100v-5out-25min-200max.txt for input.
+Successfully loaded 510 lines. 
+<The graph in ./data/FixedDegree/100v-5out-25min-200max.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 517    Time: 6 ms
+Max Flow: 517    Time: 10 ms
+Max Flow: 517    Time: 7 ms
+Max Flow: 517    Time: 7 ms
+Max Flow: 517    Time: 6 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 517    Time: 0 ms
+Max Flow: 517    Time: 1 ms
+Max Flow: 517    Time: 0 ms
+Max Flow: 517    Time: 0 ms
+Max Flow: 517    Time: 1 ms
+---Preflow Push Algorithm---
+Max Flow: 517    Time: 60 ms
+Max Flow: 517    Time: 57 ms
+Max Flow: 517    Time: 54 ms
+Max Flow: 517    Time: 57 ms
+Max Flow: 517    Time: 58 ms
+Opened ./data/Mesh/smallMesh.txt for input.
+Successfully loaded 31 lines. 
+<The graph in ./data/Mesh/smallMesh.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 1 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 1 ms
+---Preflow Push Algorithm---
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Max Flow: 6    Time: 0 ms
+Opened ./data/Mesh/mediumMesh.txt for input.
+Successfully loaded 570 lines. 
+<The graph in ./data/Mesh/mediumMesh.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 39    Time: 96 ms
+Max Flow: 39    Time: 98 ms
+Max Flow: 39    Time: 97 ms
+Max Flow: 39    Time: 96 ms
+Max Flow: 39    Time: 97 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 39    Time: 1 ms
+Max Flow: 39    Time: 1 ms
+Max Flow: 39    Time: 1 ms
+Max Flow: 39    Time: 1 ms
+Max Flow: 39    Time: 1 ms
+---Preflow Push Algorithm---
+Max Flow: 39    Time: 62 ms
+Max Flow: 39    Time: 57 ms
+Max Flow: 39    Time: 61 ms
+Max Flow: 39    Time: 66 ms
+Max Flow: 39    Time: 63 ms
+Opened ./data/Random/n10-m10-cmin5-cmax10-f30.txt for input.
+Successfully loaded 46 lines. 
+<The graph in ./data/Random/n10-m10-cmin5-cmax10-f30.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 25    Time: 1 ms
+Max Flow: 25    Time: 1 ms
+Max Flow: 25    Time: 1 ms
+Max Flow: 25    Time: 1 ms
+Max Flow: 25    Time: 0 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+---Preflow Push Algorithm---
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Max Flow: 25    Time: 0 ms
+Opened ./data/Random/n100-m100-cmin10-cmax20-f949.txt for input.
+Successfully loaded 6844 lines. 
+<The graph in ./data/Random/n100-m100-cmin10-cmax20-f949.txt>
+---Ford Fulkerson Algorithm---
+Max Flow: 949    Time: 56 ms
+Max Flow: 949    Time: 54 ms
+Max Flow: 949    Time: 51 ms
+Max Flow: 949    Time: 51 ms
+Max Flow: 949    Time: 50 ms
+---Scaling Max-Flow Algorithm---
+Max Flow: 949    Time: 7 ms
+Max Flow: 949    Time: 7 ms
+Max Flow: 949    Time: 6 ms
+Max Flow: 949    Time: 8 ms
+Max Flow: 949    Time: 7 ms
+---Preflow Push Algorithm---
+Max Flow: 949    Time: 114 ms
+Max Flow: 949    Time: 110 ms
+Max Flow: 949    Time: 116 ms
+Max Flow: 949    Time: 112 ms
+Max Flow: 949    Time: 119 ms
