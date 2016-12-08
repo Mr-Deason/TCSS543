@@ -42,39 +42,6 @@ public class tcss543 {
 
 				sg = new SimpleGraph();
 				Hashtable hash = GraphInput.LoadSimpleGraph(sg, input);
-				// BufferedReader in;
-				// in = new BufferedReader(new InputStreamReader(System.in));
-				// boolean check = false;
-				// do {
-				// System.out.println("Enter the SOURCE (case-sensitive)");
-				// try {
-				// source = in.readLine();
-				// if (hash.keySet().contains(source)) {
-				// check = true;
-				// } else {
-				// System.out.println("Enter a Valid SOURCE");
-				// }
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
-				// } while (check == false);
-				// check = false;
-				// do {
-				// System.out.println("Enter the SINK (case-sensitive)");
-				// try {
-				// sink = in.readLine();
-				// if (hash.keySet().contains(sink) && !source.equals(sink)) {
-				// check = true;
-				// } else if (source.equalsIgnoreCase(sink)) {
-				// System.out.println("SOURCE and SINK cannot be the same");
-				// System.out.println("Enter a valid SINK");
-				// } else {
-				// System.out.println("Enter a valid SINK");
-				// }
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
-				// } while (check == false);
 				System.out.println("<The graph from user input>");
 			} else {
 				sg = new SimpleGraph();

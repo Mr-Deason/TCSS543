@@ -76,6 +76,11 @@ public class ScalingMaxFlow {
 			}
 
 		}
+		updateResGraph(sg, list, last, edges, flow);
+		return flow;
+	}
+	
+	private static void updateResGraph(SimpleGraph sg, ArrayList list, ArrayList last, ArrayList edges, int flow) {
 
 		for (int i = list.size() - 1; i != 0;) {
 			int j = (Integer) last.get(i);
@@ -86,6 +91,5 @@ public class ScalingMaxFlow {
 			e.setData((Integer) e.getData() - flow);
 			i = j;
 		}
-		return flow;
 	}
 }

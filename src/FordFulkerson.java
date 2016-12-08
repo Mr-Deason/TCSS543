@@ -177,44 +177,6 @@ public class FordFulkerson {
             e.printStackTrace();
         }
     }
-
-    //the following function writes the max-flow, the time taken to execute the algorithm
-    //for the generated graph from the input file and the file name to a file(logFile.csv)
-    public static void logToFile(long time, String fileName,int maxFlow)
-    {
-        FileWriter fileWriter = null;
-        BufferedWriter  bufferedWriter = null;
-        PrintWriter printWriter = null;
-        String fName = "logFile.csv";
-        try
-        {
-            File file = new File(fName);
-            fileWriter = new FileWriter(file,true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            printWriter = new PrintWriter(bufferedWriter);
-            printWriter.println(fileName+","+time+","+maxFlow);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if(printWriter!=null)
-                    printWriter.close();
-                if(bufferedWriter!=null)
-                    bufferedWriter.close();
-                if(fileWriter!=null)
-                    fileWriter.close();
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
     
     public static int MaxFlow(SimpleGraph sg) {
     	return MaxFlow(sg, "s", "t");
@@ -231,82 +193,5 @@ public class FordFulkerson {
     	sink = t;
     	maxflow = computeMaxFlow(hash);
     	return maxflow;
-    }
-    //main function of the class
-    public static void main(String args[]) throws Exception
-    {
-        BufferedReader input = null;
-        try
-        {
-            if(args.length > 0)
-            {
-                input = new BufferedReader(new InputStreamReader(System.in));
-                SimpleGraph G;
-                G = new SimpleGraph();
-                Hashtable hash = GraphInput.LoadSimpleGraph(G, args[0]);
-                boolean check = false;
-                do
-                {
-                    System.out.println("Enter the SOURCE (case-sensitive)");
-                    source = input.readLine();
-                    if(hash.keySet().contains(source))
-                    {
-                        check = true;
-                    }
-                    else
-                    {
-                        System.out.println("Enter a Valid SOURCE");
-                    }
-                }while(check==false);
-                check = false;
-                do
-                {
-                    System.out.println("Enter the SINK (case-sensitive)");
-                    sink = input.readLine();
-                    if(hash.keySet().contains(sink) && !source.equals(sink))
-                    {
-                        check = true;
-                    }
-                    else if(source.equalsIgnoreCase(sink))
-                    {
-                        System.out.println("SOURCE and SINK cannot be the same");
-                        System.out.println("Enter a valid SINK");
-                    }
-                    else
-                    {
-                        System.out.println("Enter a valid SINK");
-                    }
-                }while(check==false);
-                //System.out.println("Vertices :: "+ hash.keySet());
-
-                long start = System.currentTimeMillis();
-                int maxFlow = computeMaxFlow(hash);
-                long end = System.currentTimeMillis() - start;
-                System.out.println("The Max Flow for the given graph is :: "+maxFlow);
-
-                String fileName = args[0];
-                logToFile(end,fileName,maxFlow);
-            }
-            else
-            {
-                System.out.println("Input a file!");
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if(input!=null)
-                    input.close();
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 }
